@@ -2,9 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const pool = require('./database.js');
+require('dotenv').config();
+const autheticationRoutes = require('./routes/auth.js');
 
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth', autheticationRoutes);
 
 // Routes
 app.get('/api/initialRoute', (req, res) => {
