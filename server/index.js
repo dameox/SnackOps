@@ -1,0 +1,27 @@
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const pool = require('./database.js');
+
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.get('/api/initialRoute', (req, res) => {
+    res.json({ message: 'API is working!' });
+});
+
+
+const PORT = process.env.PORT || 3000;
+
+// server start + database connection test
+app.listen(PORT, async () => {
+    console.log(`Server is running on port ${PORT}`);
+
+    try {
+        await pool.query('SELECT 1');
+        console.log('Database connection successful!');
+    } catch (error) {
+        console.error('Database connection failed:', error);
+    }
+});
