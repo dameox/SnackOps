@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from './AuthContext';
+import {useAuth} from '../AuthContext.jsx';
 import axios from 'axios';
 
 function Login() {
@@ -13,14 +13,14 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://88.200.63.148:3000/api/login',{
+            const response = await axios.post('http://88.200.63.148:3000/api/auth/login',{
                 email,
                 password
             });
             login(response.data.token, response.data.user);
 
             if (response.data.user.role === 'owner') {
-                navigate('/owner');
+                navigate('/dashboard');
             } else {
                 navigate('/worker');
             }
