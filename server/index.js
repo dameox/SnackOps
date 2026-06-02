@@ -7,11 +7,13 @@ const autheticationRoutes = require('./routes/authRoute.js');
 const authenticateToken = require('./authorization/auth.js');
 const machinesRoutes = require('./routes/machinesRoute.js');
 const slotRoutes = require('./routes/SlotRoute.js');
+const productsRoute = require('./routes/productsRoute.js');
 
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', autheticationRoutes);
 app.use('/api/machines', machinesRoutes);
+app.use('/api/products', productsRoute);
 app.use('/api/slots', slotRoutes);
 
 // Routes
