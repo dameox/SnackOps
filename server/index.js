@@ -4,15 +4,21 @@ const cors = require('cors');
 const pool = require('./database.js');
 require('dotenv').config();
 const autheticationRoutes = require('./routes/authRoute.js');
+const authenticateToken = require('./authorization/auth.js');
+const machinesRoutes = require('./routes/machinesRoute.js');
+const slotRoutes = require('./routes/SlotRoute.js');
 
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', autheticationRoutes);
+app.use('/api/machines', machinesRoutes);
+app.use('/api/slots', slotRoutes);
 
 // Routes
 app.get('/api/initialRoute', (req, res) => {
     res.json({ message: 'API is working!' });
 });
+
 
 
 const PORT = process.env.PORT || 3000;
