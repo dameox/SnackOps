@@ -20,4 +20,4 @@ const authenticateToken = (req, res, next) => {
 
 };
 
-modeule.exports = authenticateToken;
+module.exports = authenticateToken;

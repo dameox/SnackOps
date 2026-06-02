@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const pool = require('./database.js');
 require('dotenv').config();
-const autheticationRoutes = require('./routes/auth.js');
+const autheticationRoutes = require('./routes/authRoute.js');
 
 app.use(cors());
 app.use(express.json());
