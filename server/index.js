@@ -16,7 +16,7 @@ app.use('/api/auth', autheticationRoutes);
 app.use('/api/machines', machinesRoutes);
 app.use('/api/products', productsRoute);
 app.use('/api/slots', slotRoutes);
-app.use('/api/restock-route', restockPlanRoute);
+app.use('/api/restock-plan', restockPlanRoute);
 
 // Routes
 app.get('/api/initialRoute', (req, res) => {

@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../database.js');
 
 async function generateRestockPlan() {
     //get number of low slots
