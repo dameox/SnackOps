@@ -1,3 +1,5 @@
+const pool = require('../database.js');
+
 function parseCoordinates(coord) {
     const [lat,lng] = coord.split(",").map(Number);
 
