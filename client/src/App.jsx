@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import GuardedRoute from './GuardedRoute';
 import { Navigate } from 'react-router-dom';
-import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
