@@ -3,8 +3,13 @@ import {createContext, useState, useContext} from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({children}) {
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    
+   // const [token, setToken] =useState(localStorage.getItem('token'));
+   // const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+
+   //HARDCODED USER AND TOKEN SO I DONT HAVE TO START UP THE SERVER ALL THE TIME WHEN MAKING FRONT_END
+    const [token, setToken] = useState('fake-token');
+    const [user, setUser] = useState({name: 'Admin Owner', email: 'owner@snackops.com', role: 'owner'});
 
     const login = (token, user) => {
         localStorage.setItem('token', token);

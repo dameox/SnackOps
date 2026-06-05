@@ -1,8 +1,14 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './Login';
+import Login from './frames/Login';
 import GuardedRoute from './GuardedRoute';
 import { Navigate } from 'react-router-dom';
+import Dashboard from './frames/Dashboard';
+import Machines from './frames/Machines';
+import RestockPlan from './frames/RestockPlan';
+import Routes_ from './frames/Routes';
+import Logs from './frames/Logs';
+import Workers from './frames/Workers';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,10 +18,40 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={
-            <GuardedRoute>
-              <h1>Welcome to the Dashboard, Owner!</h1>
-            </GuardedRoute>
+            //<GuardedRoute>
+              <Dashboard/>
+          //  </GuardedRoute>
           } />
+          <Route path="/machines" element={
+          //<GuardedRoute>
+            <Machines />
+          //</GuardedRoute>
+        } />
+
+        <Route path="/restock-plan" element={
+          //<GuardedRoute>
+            <RestockPlan />
+          //</GuardedRoute>
+        } />
+
+        <Route path="/routes" element={
+          //<GuardedRoute>
+            <Routes_ />
+          //</GuardedRoute>
+        } />
+
+        <Route path="/logs" element={
+          //<GuardedRoute>
+            <Logs />
+          //</GuardedRoute>
+        } />
+
+        <Route path="/workers" element={
+          //<GuardedRoute>
+            <Workers />
+          //</GuardedRoute>
+        } />
+
 
           <Route path="/worker" element={
             <GuardedRoute>

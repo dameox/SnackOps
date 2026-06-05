@@ -58,7 +58,7 @@ async function generateRestockPlan() {
         for(let slot of machine.low_slots){
             await pool.query(`
                 INSERT INTO RESTOCK_PLAN_ITEM (restock_plan_id, machine_id, slot_id, qty_to_fill, is_completed) 
-                VALUES (${planId}, ${machine.machine_id}, ${slot.id}, ${qtyToFIll}, false)
+                VALUES (${planId}, ${machine.machine_id}, ${slot.id}, ${qtyToFill}, false)
                 `);
         }
     }
