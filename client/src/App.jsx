@@ -9,6 +9,7 @@ import RestockPlan from './frames/RestockPlan';
 import Routes_ from './frames/Routes';
 import Logs from './frames/Logs';
 import Workers from './frames/Workers';
+import WorkerDashboard from './frames/WorkerDashboard';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -54,9 +55,9 @@ function App() {
 
 
           <Route path="/worker" element={
-            <GuardedRoute>
-              <h1>Welcome!</h1>
-            </GuardedRoute>
+           // <GuardedRoute>
+              <WorkerDashboard/>
+           // </GuardedRoute>
           } />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

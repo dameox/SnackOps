@@ -1,7 +1,6 @@
 import Sidebar from '../components/Sidebar';
-import RestockMachine from '../components/RestockMachine';
+import RestockMachine from '../components/restockMachine';
 import '../stylesheets/restockSheet.css';
-import { useState } from 'react';
 
 const mockMachines = [
     {
@@ -34,31 +33,14 @@ const mockMachines = [
 ];
 
 
-function RestockPlan(){
-    const [showBanner, setShowBanner] = useState(false);
-    const date = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
-
+function WorkerDashboard(){
     return(
         <div className='layout'>
             <Sidebar/>
             <div className='content'>
-                <div className='restock-header'>
-                    <div className='restock-title'>Restock Plan</div>
-                    <button className='add-btn'onClick={() => setShowBanner(true)}>
-                        <i className='bi bi-arrow-clockwise'></i> Generate New Plan
-                    </button>
-                </div>
-                {showBanner && (
-                    <div className='restock-plan-banner'>
-                        <div>
-                            <div className='restock-plan-date'>Plan generated - {date}</div>
-                            <div className='restock-plan-sub'>3 machines to refill</div>
-                        </div>
-                    </div>
-                )}
-                <div className='restock-machines'>
+            <div className='restock-machines'>
                     {mockMachines.map(m => (
-                        <RestockMachine key={m.id} id={m.id} order={m.order} name={m.name} slots={m.slots}/>
+                        <RestockMachine key={m.id} id={m.id} order={m.order} name={m.name} slots={m.slots} showDoneBtn={true}/>
                     ))}
                 </div>
             </div>
@@ -66,4 +48,4 @@ function RestockPlan(){
     );
 }
 
-export default RestockPlan
+export default WorkerDashboard

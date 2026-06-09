@@ -46,10 +46,10 @@ function Sidebar(){
                             <i className='bi bi-box-seam sidebar-icon'></i>
                             <div className='sidebar-label'>My Routes</div>
                         </NavLink>
-                        <NavLink to='/worker/slots' className={({isActive}) => 'sidebar-nav-link' + (isActive ? ' active' : '')}>
+                        {/* <NavLink to='/worker/slots' className={({isActive}) => 'sidebar-nav-link' + (isActive ? ' active' : '')}>
                             <i className='bi bi-person-circle sidebar-icon'></i>
                             <div className='sidebar-label'>Update Inventory</div>
-                        </NavLink>
+                        </NavLink> */}
                     </>
                 )}
             </nav>
