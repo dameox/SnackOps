@@ -1,0 +1,105 @@
+.routes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.routes-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+.routes-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.driver-select {
+    background: #1e2025;
+    border: 1px solid #3a3d45;
+    color: #a0a0a0;
+    font-size: 0.88rem;
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+}
+
+.driver-select:focus {
+    border-color: #7b6ef6;
+}
+
+.routes-body {
+    display: flex;
+    gap: 24px;
+}
+
+.routes-map-placeholder {
+    flex: 1;
+    min-height: 400px;
+    background: #1e2025;
+    border-radius: 12px;
+}
+
+.routes-panel {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.routes-stops-title {
+    font-size: 0.85rem;
+    color: #8a8a8a;
+}
+
+.routes-stops {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.route-stop-card {
+    background: #1e2025;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.route-stop-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.route-stop-address {
+    font-size: 0.78rem;
+    color: #8a8a8a;
+}
+
+.route-stop-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: #8a8a8a;
+    margin-top: 4px;
+}
+
+.routes-summary {
+    background: #1e2025;
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.routes-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+}

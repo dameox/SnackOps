@@ -1,0 +1,110 @@
+.machines-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.machines-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+.add-btn {
+    background: #6457e8 !important;
+    color: #fff !important;
+    border: none !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    padding: 9px 18px !important;
+    border-radius: 8px !important;
+    transition: background 0.15s !important;
+    cursor: pointer !important;
+}
+
+.add-btn:hover {
+    background: #7b6ef6 !important;
+    color: #fff;
+}
+
+.add-btn:active {
+    background: #5548d0 !important;
+}
+
+.machines-content {
+    background: #1e2025;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.machine-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.machine-table-head th {
+    padding: 14px 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #8a8a8a;
+    text-align: left;
+    border-bottom: 1px solid #2a2d34;
+}
+
+.machine-row td {
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    color: #e0e0e0;
+    border-bottom: 1px solid #2a2d34;
+}
+
+.machine-row:last-child td {
+    border-bottom: none;
+}
+
+.machine-row:hover {
+    background: #2a2d34;
+}
+
+.machine-row-name {
+    font-weight: 600;
+}
+
+.machine-row-address {
+    color: #8a8a8a !important;
+}
+
+.machine-row-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.machine-row-btn-delete {
+    background: #dc3545 !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    cursor: pointer !important;
+    transition: background 0.15s !important;
+}
+
+.machine-row-btn-delete:hover {
+    background: #bb2d3b !important;
+}
+
+.machine-row-btn-view {
+    background: #2a2d34 !important;
+    border: none !important;
+    color: #8a8a8a !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    cursor: pointer !important; 
+    transition: background 0.15s !important;
+}
+
+.machine-row-btn-view:hover {
+    background: #3a3d45 !important;
+    color: #e0e0e0 !important;
+}

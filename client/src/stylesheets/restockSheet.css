@@ -1,0 +1,122 @@
+.restock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.restock-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+.restock-plan-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(123, 110, 246, 0.18);
+    border: 1px solid rgba(123, 110, 246, 0.35);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+}
+
+.restock-plan-date {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 4px;
+}
+
+.restock-plan-sub {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+}
+
+.restock-machines {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.restock-machine {
+    background: #1e2025;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.restock-machine-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.restock-machine-index {
+    background: #6457e8;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.restock-machine-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.restock-machine-slots {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.slot-item {
+    background: #2a2d34;
+    border-radius: 8px;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 120px;
+}
+
+.slot-item-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.slot-item-units {
+    font-size: 0.75rem;
+    color: #8a8a8a;
+}
+
+.show-done-btn {
+    margin-left: auto;
+    background: #6457e8;
+    color: #fff;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.show-done-btn:hover {
+    background: #7b6ef6;
+}
+
+.show-done-btn:active {
+    background: #5548d0;
+}
