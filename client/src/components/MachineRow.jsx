@@ -1,6 +1,8 @@
 import { Button } from 'react-bootstrap';
+import { useNavigate } from "react-router";
 
-function MachineRow({machine}) {
+function MachineRow({machine, onDelete}) {
+    const navigate = useNavigate();
 
     let stockColor;
     if(machine.stock === 'High'){
@@ -22,8 +24,8 @@ function MachineRow({machine}) {
             </td>
             <td className='machine-row-restock'>{machine.lastRestock}</td>
             <td className='machine-row-actions'>
-                <Button className='machine-row-btn-delete' variant='none'><i className='bi bi-trash'></i></Button>
-                <Button className='machine-row-btn-view' variant='none'><i className='bi bi-eye'></i></Button>
+                <Button className='machine-row-btn-delete' variant='none' onClick={() => onDelete(machine.id)}><i className='bi bi-trash'></i></Button>
+                <Button className='machine-row-btn-view' variant='none' onClick={() => navigate(`/machines/${machine.id}`)}><i className='bi bi-eye'></i></Button>
             </td>
         </tr>
     );

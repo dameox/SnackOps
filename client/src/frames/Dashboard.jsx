@@ -3,15 +3,19 @@ import Sidebar from '../components/Sidebar';
 import FleetStatus from '../components/FleetStatus';
 import StatComponent from '../components/StatComponent';
 import '../stylesheets/dashboardSheet.css';
+import { useNavigate } from "react-router";
+
 
 function Dashboard(){
+    const navigate = useNavigate();
+
     return(
         <div className='layout'>
             <Sidebar/>
             <div className='content'>
                 <div className='dashboard-header'>
                     <div className='dashboard-title'>Dashboard</div>
-                    <Button className='restock-btn' variant='none'>
+                    <Button className='restock-btn' variant='none' onClick={() => navigate('/restock-plan?generated=true')}>
                         <i className='bi bi-arrow-clockwise me-2'></i>Generate Restock Plan
                     </Button>
                 </div>

@@ -1,4 +1,5 @@
 import MachineRow from './MachineRow';
+import { useState } from 'react';
 
 const mockMachines = [
     {id: 1, name: 'FAMNIT',    address: 'Example address 1, Koper', stock: 'Low',    lastRestock: 'May 20'},
@@ -11,7 +12,17 @@ const mockMachines = [
     {id: 8, name: 'FM 2',      address: 'Example address 1, Koper', stock: 'High',   lastRestock: 'May 12'},
 ];
 
+
+
 function MachineTable() {
+    const [machines, setMachines] = useState(mockMachines);
+
+    function deleteRow(id) {
+        setMachines(machines.filter((m) => {
+            return m.id != id;
+        }))
+    }
+
     return(
             <table className='machine-table'>
                 <thead>
@@ -24,12 +35,15 @@ function MachineTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockMachines.map(m => (
-                        <MachineRow key={m.id} machine={m} />
+                    {machines.map(m => (
+                        <MachineRow key={m.id} machine={m} onDelete={deleteRow} />
                     ))}
                 </tbody>
             </table>
     );
+    
 }
+
+
 
 export default MachineTable

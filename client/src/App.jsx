@@ -9,6 +9,7 @@ import Routes_ from './frames/Routes';
 import Logs from './frames/Logs';
 import Workers from './frames/Workers';
 import WorkerDashboard from './frames/WorkerDashboard';
+import InspectMachine from './frames/InspectMachine';
 
 function App() {
 
@@ -26,6 +27,13 @@ function App() {
             <Machines />
           //</GuardedRoute>
         } />
+
+          <Route path="/machines/:id" element={
+          //<GuardedRoute>
+            <InspectMachine />
+          //</GuardedRoute>
+        } />
+
 
         <Route path="/restock-plan" element={
           //<GuardedRoute>

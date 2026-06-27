@@ -1,7 +1,8 @@
 import Sidebar from '../components/Sidebar';
 import RestockMachine from '../components/RestockMachine';
 import '../stylesheets/restockSheet.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 const mockMachines = [
     {
@@ -34,9 +35,24 @@ const mockMachines = [
 ];
 
 
+ 
+
+
+
 function RestockPlan(){
-    const [showBanner, setShowBanner] = useState(false);
+    let [showBanner, setShowBanner] = useState(false);
     const date = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
+
+    const [searchParams] = useSearchParams();
+    const generated = searchParams.get('generated');
+    //console.log(generated);
+
+    useEffect(() => {
+        if(generated === 'true'){
+            setShowBanner(true);
+        }
+    });
+
 
     return(
         <div className='layout'>
