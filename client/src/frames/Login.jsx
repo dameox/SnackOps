@@ -4,6 +4,7 @@ import {useAuth} from '../../AuthContext.jsx';
 import '../stylesheets/LoginSheet.css';
 import axios from 'axios';
 
+
 import Button from 'react-bootstrap/Button';
 
 function Login() {
@@ -16,7 +17,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://88.200.63.148:3000/api/auth/login',{
+            const response = await axios.post(`http://${import.meta.env.DB_ENDPOINT_FAMNIT}/api/auth/login`,{
                 email,
                 password
             });

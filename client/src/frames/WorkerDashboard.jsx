@@ -1,5 +1,5 @@
 import Sidebar from '../components/Sidebar';
-import RestockMachine from '../components/restockMachine';
+import RestockMachine from '../components/RestockMachine.jsx';
 import '../stylesheets/restockSheet.css';
 
 const mockMachines = [

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './frames/Login';
 import GuardedRoute from './GuardedRoute';
@@ -12,7 +11,6 @@ import Workers from './frames/Workers';
 import WorkerDashboard from './frames/WorkerDashboard';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
