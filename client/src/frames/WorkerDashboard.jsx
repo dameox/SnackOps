@@ -1,6 +1,7 @@
 import Sidebar from '../components/Sidebar';
 import RestockMachine from '../components/RestockMachine.jsx';
 import '../stylesheets/restockSheet.css';
+import { useState } from 'react';
 
 const mockMachines = [
     {
@@ -34,13 +35,16 @@ const mockMachines = [
 
 
 function WorkerDashboard(){
+    let [machines, setMachines] = useState(mockMachines);
+    
     return(
         <div className='layout'>
             <Sidebar/>
             <div className='content'>
             <div className='restock-machines'>
-                    {mockMachines.map(m => (
-                        <RestockMachine key={m.id} id={m.id} order={m.order} name={m.name} slots={m.slots} showDoneBtn={true}/>
+                    {machines.map(m => (
+                        <RestockMachine key={m.id} id={m.id} order={m.order} 
+                        name={m.name} slots={m.slots} showDoneBtn={true} onComplete={(id) => setMachines(machines.filter(m => m.id !== id))}/>
                     ))}
                 </div>
             </div>

@@ -9,7 +9,7 @@ export function AuthProvider({children}) {
 
    //HARDCODED USER AND TOKEN SO I DONT HAVE TO START UP THE SERVER ALL THE TIME WHEN MAKING FRONT_END
     const [token, setToken] = useState('fake-token');
-    const [user, setUser] = useState({name: 'Admin Owner', email: 'owner@snackops.com', role: 'owner'});
+    const [user, setUser] = useState({name: 'Admin Owner', email: 'owner@snackops.com', role: 'worker'});
 
     const login = (token, user) => {
         localStorage.setItem('token', token);

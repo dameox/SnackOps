@@ -5,6 +5,8 @@ import StatComponent from '../components/StatComponent.jsx';
 import { useParams } from 'react-router-dom';
 import SlotCard from '../components/SlotCard.jsx';
 import '../stylesheets/inspectSheet.css';
+import MachineModal from '../components/MachineModal.jsx';
+import { useState } from 'react';
 
   const mockMachines = [
     {
@@ -23,7 +25,7 @@ import '../stylesheets/inspectSheet.css';
 ];
 
 function InspectMachine(){
-
+    let [showModal, setShowModal] = useState(false);
  
     const {id} = useParams();
     console.log(id);
@@ -39,9 +41,10 @@ function InspectMachine(){
                         <div className='inspect-title'>{machine.name}</div>
                         <div className='inspect-address'>{machine.address}</div>
                     </div>
-                    <button className='add-btn'>
+                    <button className='add-btn' onClick={() => setShowModal(true)}>
                         <i className='bi bi-arrow-clockwise'></i> Edit Machine
                     </button>
+                    <MachineModal show={showModal} onClose={() => setShowModal(false)} machine={machine}/>
                 </div>
                 <div className='slot-status'>
                     <StatComponent title={'Total slots'} value={8} footer={''} color={'#ffffff'}/>
