@@ -17,7 +17,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://${import.meta.env.DB_ENDPOINT_FAMNIT}/api/auth/login`,{
+            const response = await axios.post(`/api/auth/login`,{
                 email,
                 password
             });
@@ -31,7 +31,6 @@ function Login() {
         } catch (error) {
             console.error('Login failed:', error);
             setFailAttempt(true);
-            alert('Login failed. Please check your credentials and try again.');
         }
         
     };

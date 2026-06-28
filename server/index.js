@@ -10,6 +10,7 @@ const slotRoutes = require('./routes/SlotRoute.js');
 const productsRoute = require('./routes/productsRoute.js');
 const restockPlanRoute = require('./routes/restockPlanRoute.js');
 const routeRoutes = require('./routes/routesRoute.js');
+const usersRoute = require('./routes/usersRoute.js');
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/products', productsRoute);
 app.use('/api/slots', slotRoutes);
 app.use('/api/restock-plan', restockPlanRoute);
 app.use('/api/routes', routeRoutes);
+app.use('/api/users', usersRoute);
 
 // Routes
 app.get('/api/initialRoute', (req, res) => {

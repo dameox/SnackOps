@@ -18,52 +18,52 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={
-            //<GuardedRoute>
+            <GuardedRoute>
               <Dashboard/>
-          //  </GuardedRoute>
+            </GuardedRoute>
           } />
           <Route path="/machines" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <Machines />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
           <Route path="/machines/:id" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <InspectMachine />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
 
         <Route path="/restock-plan" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <RestockPlan />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
         <Route path="/routes" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <Routes_ />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
         <Route path="/logs" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <Logs />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
         <Route path="/workers" element={
-          //<GuardedRoute>
+          <GuardedRoute>
             <Workers />
-          //</GuardedRoute>
+          </GuardedRoute>
         } />
 
 
           <Route path="/worker" element={
-           // <GuardedRoute>
+           <GuardedRoute>
               <WorkerDashboard/>
-           // </GuardedRoute>
+           </GuardedRoute>
           } />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

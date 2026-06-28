@@ -1,17 +1,21 @@
 import WorkerRow from './WorkerRow';
+import { useState, useEffect } from 'react';
+import axios from 'axios'
 
-const mockWorkers = [
-    {id: 1, name: 'John',    email: 'example@email.com'},
-    {id: 2, name: 'James',   email: 'example@email.com'},
-    {id: 3, name: 'Jack',    email: 'example@email.com'},
-    {id: 4, name: 'Jill',    email: 'example@email.com'},
-    {id: 5, name: 'Jade',    email: 'example@email.com'},
-    {id: 6, name: 'Jeffery', email: 'example@email.com'},
-    {id: 7, name: 'Jojo',    email: 'example@email.com'},
-    {id: 8, name: 'Jamall',  email: 'example@email.com'},
-];
+
 
 function WorkersTable() {
+    
+    const [workers, setWorkers] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        axios.get('/api/users/workers', { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => setWorkers(res.data))
+            .catch(err => console.error('Failed to load workers:', err));
+    }, []);
+
+
     return(
         <div className='machine-table-wrapper'>
             <table className='machine-table'>
@@ -22,7 +26,7 @@ function WorkersTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockWorkers.map(w => (
+                    {workers.map(w => (
                         <WorkerRow key={w.id} worker={w} />
                     ))}
                 </tbody>

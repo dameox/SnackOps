@@ -6,31 +6,28 @@ import { useParams } from 'react-router-dom';
 import SlotCard from '../components/SlotCard.jsx';
 import '../stylesheets/inspectSheet.css';
 import MachineModal from '../components/MachineModal.jsx';
-import { useState } from 'react';
-
-  const mockMachines = [
-    {
-        id: 1, name: 'Pošta 2', address: 'Kolodvorska cesta 9, 6000 Koper',
-        slots: [
-            {id: 1, slot_code: 'A1', product_name: 'Lays',     current_qty: 6, max_capacity: 10, status: 'Good'},
-            {id: 2, slot_code: 'A2', product_name: 'Argeta',   current_qty: 2, max_capacity: 10, status: 'Low'},
-            {id: 3, slot_code: 'A3', product_name: 'Pringles', current_qty: 7, max_capacity: 10, status: 'Good'},
-            {id: 4, slot_code: 'A4', product_name: 'Orbit',    current_qty: 4, max_capacity: 10, status: 'OK'},
-            {id: 5, slot_code: 'B1', product_name: 'Coca Cola',current_qty: 1, max_capacity: 10, status: 'Low'},
-            {id: 6, slot_code: 'B2', product_name: 'Cockta',   current_qty: 8, max_capacity: 10, status: 'Good'},
-            {id: 7, slot_code: 'B3', product_name: 'Sola',     current_qty: 6, max_capacity: 10, status: 'Good'},
-            {id: 8, slot_code: 'B4', product_name: 'Monster',  current_qty: 5, max_capacity: 10, status: 'OK'},
-        ]
-    }
-];
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function InspectMachine(){
     let [showModal, setShowModal] = useState(false);
+    const [machine, setMachine] = useState(null);
  
     const {id} = useParams();
     console.log(id);
 
-    const machine = mockMachines.find(m => m.id === parseInt(id));
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        axios.get(`/api/machines/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => setMachine(res.data))
+            .catch(err => console.error('Failed to load machine:', err));
+    }, [id]);
+
+    if (!machine) return null;
+    const slots = machine.slots;
+    const goodSlots = slots.filter(s => s.status === 'Good').length;
+    const lowSlots = slots.filter(s => s.status === 'Low').length;
+    const criticalSlots = slots.filter(s => s.status === 'Critical').length; 
 
     return(
          <div className='layout'>
@@ -47,15 +44,15 @@ function InspectMachine(){
                     <MachineModal show={showModal} onClose={() => setShowModal(false)} machine={machine}/>
                 </div>
                 <div className='slot-status'>
-                    <StatComponent title={'Total slots'} value={8} footer={''} color={'#ffffff'}/>
-                    <StatComponent title={'Good slots'} value={8} footer={''} color={'#28a745'}/>
-                    <StatComponent title={'Medium slots'} value={8} footer={''} color={'#f0a500'}/>
-                    <StatComponent title={'Low slots'} value={8} footer={''} color={'#dc3545'}/>
+                    <StatComponent title={'Total slots'} value={slots.length} footer={''} color={'#ffffff'}/>
+                    <StatComponent title={'Good slots'} value={goodSlots} footer={''} color={'#28a745'}/>
+                    <StatComponent title={'Medium slots'} value={lowSlots} footer={''} color={'#f0a500'}/>
+                    <StatComponent title={'Low slots'} value={criticalSlots} footer={''} color={'#dc3545'}/>
                 </div>
                 <div className='slot-inventory'>
                     <div className='slot-inventory-header'>Slot Inventory</div>
                     <div className='slot-cards'>
-                        {machine.slots.map(s => ( 
+                        {slots.map(s => ( 
                             <SlotCard key={s.id} slot={s} />
                         ))}
                     </div>
