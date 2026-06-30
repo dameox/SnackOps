@@ -31,7 +31,7 @@ app.get('/api/initialRoute', (req, res) => {
 
 const reactBuildPath = path.join(__dirname, '../client/dist');
 app.use(express.static(reactBuildPath));
-app.get((req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(reactBuildPath, 'index.html'));
 });
 
