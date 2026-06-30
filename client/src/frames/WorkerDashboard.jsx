@@ -1,50 +1,41 @@
 import Sidebar from '../components/Sidebar';
 import RestockMachine from '../components/RestockMachine.jsx';
 import '../stylesheets/restockSheet.css';
-import { useState } from 'react';
-
-const mockMachines = [
-    {
-        id: 1, order: 91, name: 'FAMNIT',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 4},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-    {
-        id: 2, order: 90, name: 'Pošta 1',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 6},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-    {
-        id: 3, order: 20, name: 'FHŠ',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 4},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-];
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function WorkerDashboard(){
-    let [machines, setMachines] = useState(mockMachines);
+    const [stops, setStops] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+
+        axios.get('/api/routes', authHeader)
+            .then(res => {
+                if (res.data.length === 0) return;
+                const newest = res.data.sort((a, b) => b.id - a.id)[0];
+                return axios.get(`/api/routes/${newest.id}`, authHeader)
+                    .then(r => setStops(r.data.stops.filter(s => !s.completed_at)))
+            })
+            .catch(err => console.error('Failed to load route:', err));
+    }, []);
+
+    function completeStop(stopId){
+        const token = localStorage.getItem('token');
+        axios.patch(`/api/routes/${stopId}/complete`, {}, { headers: { Authorization: `Bearer ${token}` } })
+            .then(() => setStops(prev => prev.filter(s => s.id !== stopId)))
+            .catch(err => console.error('Failed to complete stop:', err));
+    }
     
     return(
         <div className='layout'>
             <Sidebar/>
             <div className='content'>
             <div className='restock-machines'>
-                    {machines.map(m => (
-                        <RestockMachine key={m.id} id={m.id} order={m.order} 
-                        name={m.name} slots={m.slots} showDoneBtn={true} onComplete={(id) => setMachines(machines.filter(m => m.id !== id))}/>
+                    {stops.map(s => (
+                        <RestockMachine key={s.id} id={s.id} order={s.order_index} 
+                        name={s.machine_name} slots={s.items} showDoneBtn={true} onComplete={completeStop}/>
                     ))}
                 </div>
             </div>

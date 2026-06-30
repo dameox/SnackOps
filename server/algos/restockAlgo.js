@@ -3,9 +3,10 @@ const pool = require('../database.js');
 async function generateRestockPlan() {
     //get number of low slots
     const [lowSlots] = await pool.query(`
-        SELECT s.*, m.id AS machine_id, m.name AS machine_name, m.coordinates as machine_coordinates
+        SELECT s.*, m.id AS machine_id, m.name AS machine_name, m.coordinates as machine_coordinates, p.name AS product_name
         FROM SLOT s
         JOIN MACHINE m ON s.machine_id = m.id
+        LEFT JOIN PRODUCT p ON s.product_id = p.id
         WHERE s.current_qty < s.min_amount`);
 
     //get number of total slots by machine
@@ -23,6 +24,8 @@ async function generateRestockPlan() {
     //Get all machines with low slots
     let machineMap = {};
     lowSlots.forEach(slot => {
+        slot.qty_to_fill = slot.max_capacity - slot.current_qty;
+
         if (!machineMap[slot.machine_id]) {
             machineMap[slot.machine_id] = {
                 machine_id: slot.machine_id,
@@ -40,15 +43,15 @@ async function generateRestockPlan() {
     //turns the machine dictionary into an arr and calculates the urgency score based on the formula.
     let machines = Object.values(machineMap);
     machines.forEach(machine => {
-        let lowSlots = machine.low_slots.length;
+        let lowCount = machine.low_slots.length;
         let total = totalSlotsMap[machine.machine_id];
-        machine.urgency_score = Math.min(Math.round((lowSlots / total)*100), 100)
+        machine.urgency_score = Math.min(Math.round((lowCount / total)*100), 100)
     });
 
     //number sort for arr(DESCENDING)
     machines.sort((a,b) => b.urgency_score - a.urgency_score);
 
-    let overallUrgency = machines[0] || 0;
+    let overallUrgency = machines[0]?.urgency_score || 0;
     const [plan] = await pool.query(`
         INSERT INTO RESTOCK_PLAN (status, urgency_score)
         VALUES ('pending', ${overallUrgency})
@@ -58,7 +61,7 @@ async function generateRestockPlan() {
         for(let slot of machine.low_slots){
             await pool.query(`
                 INSERT INTO RESTOCK_PLAN_ITEM (restock_plan_id, machine_id, slot_id, qty_to_fill, is_completed) 
-                VALUES (${planId}, ${machine.machine_id}, ${slot.id}, ${qty_to_fill}, false)
+                VALUES (${planId}, ${machine.machine_id}, ${slot.id}, ${slot.qty_to_fill}, false)
                 `);
         }
     }

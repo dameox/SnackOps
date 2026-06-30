@@ -20,7 +20,7 @@ function Dashboard(){
             .then(res => setMachines(res.data));
         
             axios.get('/api/routes', { headers: { Authorization: `Bearer ${token}` } })
-                .then(res => setActiveRoutes(res.data.filter(r => r.status === 'in progress').length));
+                .then(res => setActiveRoutes(res.data.filter(r => r.status === 'assigned').length));
 
         }, []);
 

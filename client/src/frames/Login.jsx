@@ -3,8 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../../AuthContext.jsx';
 import '../stylesheets/LoginSheet.css';
 import axios from 'axios';
-
-
 import Button from 'react-bootstrap/Button';
 
 function Login() {

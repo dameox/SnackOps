@@ -2,7 +2,6 @@ import SlotItem from './SlotItem';
 import { useState } from 'react';
 
 function RestockMachine({ id, order, name , slots, showDoneBtn, onComplete}){
-    const mockSlots = slots;
     let [markDone, setMarkDone] = useState(false);
     let [fading, setFading] = useState(false);
 
@@ -24,8 +23,8 @@ function RestockMachine({ id, order, name , slots, showDoneBtn, onComplete}){
                 )}
             </div>
             <div className='restock-machine-slots'>
-                {mockSlots.map(s => (
-                    <SlotItem key={s.id} id={s.id} code={s.code} product={s.product} units={s.units}/>
+                {slots.map(s => (
+                    <SlotItem key={s.id} id={s.id} code={s.slot_code} product={s.product_name} units={s.qty_to_fill}/>
                 ))}
             </div>
         </div>

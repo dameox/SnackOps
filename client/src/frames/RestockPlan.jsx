@@ -3,55 +3,47 @@ import RestockMachine from '../components/RestockMachine';
 import '../stylesheets/restockSheet.css';
 import { useEffect, useState } from 'react';
 import {useSearchParams} from 'react-router-dom';
-
-const mockMachines = [
-    {
-        id: 1, order: 91, name: 'FAMNIT',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 4},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-    {
-        id: 2, order: 90, name: 'Pošta 1',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 6},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-    {
-        id: 3, order: 20, name: 'FHŠ',
-        slots: [
-            {id: 1, code: 'A2', product: 'Argeta',   units: 6},
-            {id: 2, code: 'A3', product: 'Pringles', units: 2},
-            {id: 3, code: 'A4', product: 'Lays',     units: 4},
-            {id: 4, code: 'B2', product: 'Sola',     units: 3},
-        ]
-    },
-];
-
-
- 
+import axios from 'axios';
 
 
 
 function RestockPlan(){
     let [showBanner, setShowBanner] = useState(false);
+    let [machines, setMachines] = useState([]);
     const date = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
 
     const [searchParams] = useSearchParams();
     const generated = searchParams.get('generated');
     //console.log(generated);
 
+    function generatePlan(){
+        const token = localStorage.getItem('token');
+        axios.post('/api/restock-plan/generate', {}, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setMachines(res.data.machines);
+                setShowBanner(true);
+            })
+            .catch(err => console.error('Failed to generate plan:', err));
+    }
+
+    function loadLatest(){
+        const token = localStorage.getItem('token');
+        axios.get('/api/restock-plan/latest', { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                setMachines(res.data.machines);
+                if (res.data.machines.length > 0) setShowBanner(true);
+            })
+            .catch(err => console.error('Failed to load latest plan:', err));
+    }
+
+
     useEffect(() => {
         if(generated === 'true'){
-            setShowBanner(true);
+            generatePlan();
+        } else {
+            loadLatest();
         }
-    });
+    }, [generated]);
 
 
     return(
@@ -60,7 +52,7 @@ function RestockPlan(){
             <div className='content'>
                 <div className='restock-header'>
                     <div className='restock-title'>Restock Plan</div>
-                    <button className='add-btn'onClick={() => setShowBanner(true)}>
+                    <button className='add-btn'onClick={generatePlan}>
                         <i className='bi bi-arrow-clockwise'></i> Generate New Plan
                     </button>
                 </div>
@@ -68,13 +60,13 @@ function RestockPlan(){
                     <div className='restock-plan-banner'>
                         <div>
                             <div className='restock-plan-date'>Plan generated - {date}</div>
-                            <div className='restock-plan-sub'>3 machines to refill</div>
+                            <div className='restock-plan-sub'>{machines.length} machines to refill</div>
                         </div>
                     </div>
                 )}
                 <div className='restock-machines'>
-                    {mockMachines.map(m => (
-                        <RestockMachine key={m.id} id={m.id} order={m.order} name={m.name} slots={m.slots}/>
+                    {machines.map(m => (
+                        <RestockMachine key={m.machine_id} id={m.machine_id} order={m.urgency_score} name={m.machine_name} slots={m.low_slots}/>
                     ))}
                 </div>
             </div>
