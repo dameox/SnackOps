@@ -77,14 +77,38 @@ router.get('/:id', authenticateToken, async (req,res) => {
 });
 
 router.patch('/:id/complete', authenticateToken, async (req,res) => {
-    try{
-        await pool.query(`
-            UPDATE ROUTE_STOP
-            SET completed_at = NOW()
-            WHERE id=${req.params.id}
-            `);
-        res.json({ message: 'Stop marked as complete' });
-    }catch(error){
+    const stopId = req.params.id;
+    try {
+        const [stops] = await pool.query(`SELECT machine_id, route_id FROM ROUTE_STOP WHERE id = ${stopId}`);
+        if (stops.length === 0) {
+            return res.status(404).json({ message: 'Stop not found' });
+        }
+        const stop = stops[0];
+
+        const [routes] = await pool.query(`SELECT restock_plan_id FROM ROUTE WHERE id = ${stop.route_id}`);
+        const planId = routes[0].restock_plan_id;
+
+        const [items] = await pool.query(`SELECT slot_id FROM RESTOCK_PLAN_ITEM WHERE restock_plan_id = ${planId} AND machine_id = ${stop.machine_id}`);
+
+        for (let item of items) {
+            await pool.query(`UPDATE SLOT SET current_qty = max_capacity WHERE id = ${item.slot_id}`);
+        }
+
+        await pool.query(`UPDATE ROUTE_STOP SET completed_at = NOW() WHERE id = ${stopId}`);
+
+        res.json({ message: 'Stop completed and stock refilled' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+router.patch('/:id/assign', authenticateToken, ownerOnly, async (req, res) => {
+    const { user_id } = req.body;
+    try {
+        await pool.query(
+            `UPDATE ROUTE SET user_id = ${user_id}, status = 'assigned' WHERE id = ${req.params.id}`);
+        res.json({ message: 'Driver assigned' });
+    } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });

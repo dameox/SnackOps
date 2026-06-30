@@ -1,3 +1,4 @@
+
 const pool = require('../database.js');
 
 function parseCoordinates(coord) {
@@ -64,7 +65,7 @@ async function createRoute(planId, workerId){
 
     const [routeResult] = await pool.query(`
             INSERT INTO ROUTE (restock_plan_id, user_id, route_date_on, status)
-            VALUES (${planId}, ${workerId}, CURDATE(), 'assigned')
+            VALUES (${planId}, ${workerId || null}, CURDATE(), 'in progress')
             `);
     let routeId = routeResult.insertId;
     for(let i=0;i<orderedMachines.length;i++){

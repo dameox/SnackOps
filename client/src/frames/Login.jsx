@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../../AuthContext.jsx';
 import '../stylesheets/LoginSheet.css';
 import axios from 'axios';
-
 import Button from 'react-bootstrap/Button';
 
 function Login() {
@@ -16,7 +15,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://88.200.63.148:3000/api/auth/login',{
+            const response = await axios.post(`/api/auth/login`,{
                 email,
                 password
             });
@@ -30,7 +29,6 @@ function Login() {
         } catch (error) {
             console.error('Login failed:', error);
             setFailAttempt(true);
-            alert('Login failed. Please check your credentials and try again.');
         }
         
     };

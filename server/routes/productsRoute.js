@@ -17,6 +17,46 @@ router.get('/', authenticateToken, async (req, res) => {
     }
 });
 
+router.get('/analytics', authenticateToken, ownerOnly, async(req, res) => {
+    try{
+        const [sales] = await pool.query(`
+            SELECT sl.qty_sold, p.sell_price, p.name AS product_name, m.name AS machine_name
+            FROM SALE_LOG sl
+            JOIN PRODUCT p ON sl.product_id = p.id
+            JOIN MACHINE m ON sl.machine_id = m.id`);
+
+        let totalRevenue = 0;
+        let unitsSold = 0;
+        let machineRevenue = {};
+        let productRevenue = {};
+        sales.forEach(s => {
+            let revenue = s.qty_sold * s.sell_price
+
+            totalRevenue += revenue;
+            unitsSold += s.qty_sold;
+            machineRevenue[s.machine_name] = (machineRevenue[s.machine_name] || 0) + revenue;
+            productRevenue[s.product_name] = (productRevenue[s.product_name] || 0) + revenue;
+        
+        });
+
+        let bestMachine = null;
+        for (let name in machineRevenue) {
+            if (!bestMachine || machineRevenue[name] > bestMachine.revenue) {
+                bestMachine = { name, revenue: machineRevenue[name] };
+            }
+        }
+
+        let topProducts = Object.keys(productRevenue)
+            .map(name => ({ name, revenue: productRevenue[name] }))
+            .sort((a, b) => b.revenue - a.revenue)
+            .slice(0, 5);
+
+        res.json({ totalRevenue, unitsSold, bestMachine, topProducts });
+    } catch(err){
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
 router.post('/', authenticateToken, ownerOnly, async (req, res) => {
     const { name, category, unit_cost, sell_price } = req.body;
 

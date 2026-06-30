@@ -1,0 +1,96 @@
+.inspect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.inspect-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.inspect-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+.inspect-address {
+    font-size: 0.82rem;
+    color: #8a8a8a;
+}
+
+.slot-status {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.slot-inventory-header {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 16px;
+}
+
+.slot-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.slot-card {
+    background: #1e2025;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.slot-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.slot-card-code {
+    font-size: 0.78rem;
+    color: #8a8a8a;
+}
+
+.slot-card-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+.slot-card-qty {
+    font-size: 0.85rem;
+    color: #8a8a8a;
+}
+
+.slot-card-status {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+}
+
+.slot-card-status.Good {
+    background: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+}
+
+.slot-card-status.Low {
+    background: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+}
+
+.slot-card-status.OK {
+    background: rgba(240, 165, 0, 0.15);
+    color: #f0a500;
+}

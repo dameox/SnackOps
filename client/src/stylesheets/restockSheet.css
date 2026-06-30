@@ -44,6 +44,9 @@
     background: #1e2025;
     border-radius: 12px;
     padding: 20px;
+    border: 2px solid transparent;
+    max-height: 500px;
+    transition: border 0.3s, opacity 0.4s, max-height 0.4s ease, margin 0.4s, padding 0.4s;
 }
 
 .restock-machine-header {
@@ -113,10 +116,26 @@
     transition: background 0.15s;
 }
 
+.show-done-btn.btn-done {
+    background-color: #28a745 !important;
+}
+
 .show-done-btn:hover {
     background: #7b6ef6;
 }
 
 .show-done-btn:active {
     background: #5548d0;
+}
+
+.card-completing {
+    border: 2px solid #28a745;
+}
+
+.card-fading {
+    opacity: 0;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
 }

@@ -1,17 +1,26 @@
 import MachineRow from './MachineRow';
-
-const mockMachines = [
-    {id: 1, name: 'FAMNIT',    address: 'Example address 1, Koper', stock: 'Low',    lastRestock: 'May 20'},
-    {id: 2, name: 'Pošta 1',   address: 'Example address 1, Koper', stock: 'Medium', lastRestock: 'May 12'},
-    {id: 3, name: 'Pošta 2',   address: 'Example address 1, Koper', stock: 'Low',    lastRestock: 'April 28'},
-    {id: 4, name: 'FHŠ 1',     address: 'Example address 1, Koper', stock: 'Medium', lastRestock: 'May 22'},
-    {id: 5, name: 'PEF',       address: 'Example address 1, Koper', stock: 'High',   lastRestock: 'May 15'},
-    {id: 6, name: 'Titov Trg', address: 'Example address 1, Koper', stock: 'Medium', lastRestock: 'May 20'},
-    {id: 7, name: 'FM 1',      address: 'Example address 1, Koper', stock: 'Medium', lastRestock: 'May 21'},
-    {id: 8, name: 'FM 2',      address: 'Example address 1, Koper', stock: 'High',   lastRestock: 'May 12'},
-];
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 function MachineTable() {
+    const [machines, setMachines] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        axios.get('/api/machines', { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => setMachines(res.data));
+    }, []);
+
+
+    function deleteRow(id) {
+        const token = localStorage.getItem('token');
+        axios.delete(`/api/machines/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+            .then(() => {
+                setMachines(machines.filter((m) => m.id != id));
+            })
+            .catch(err => console.error('Failed to delete machine:', err));
+    }
+
     return(
             <table className='machine-table'>
                 <thead>
@@ -19,17 +28,19 @@ function MachineTable() {
                         <th>Machine</th>
                         <th>Address</th>
                         <th>Stock Level</th>
-                        <th>Last Restock</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {mockMachines.map(m => (
-                        <MachineRow key={m.id} machine={m} />
+                    {machines.map(m => (
+                        <MachineRow key={m.id} machine={m} onDelete={deleteRow} />
                     ))}
                 </tbody>
             </table>
     );
+    
 }
+
+
 
 export default MachineTable

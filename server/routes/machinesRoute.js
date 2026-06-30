@@ -21,6 +21,20 @@ router.get('/', authenticateToken, async (req, res) => {
                 WHERE user_id = ${req.user.id}
                 ORDER BY id`);
         }
+
+        const [slots] = await pool.query('SELECT * FROM SLOT');
+
+        machines.forEach(machine => {
+            const mySlots = slots.filter(s => s.machine_id === machine.id);
+            let filled = 0;
+            let capacity = 0;
+            mySlots.forEach(s => {
+                filled += s.current_qty;
+                capacity += s.max_capacity;
+            });
+            machine.stock = capacity === 0 ? 0 : Math.round((filled / capacity) * 100);
+        });
+
         res.json(machines);
     } catch (error) {
         console.error('Error fetching machines:', error);

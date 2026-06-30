@@ -1,13 +1,6 @@
 import '../stylesheets/machineSheet.css';
 
-const mockProducts = [
-    {rank: 1, name: 'Coca-Cola 330ml',     revenue: '€332'},
-    {rank: 2, name: 'Monster Energy 0.5l', revenue: '€232'},
-    {rank: 3, name: 'Lays Original 150g',  revenue: '€164'},
-    {rank: 4, name: 'Orbit Lemon Fresh',   revenue: '€90'},
-];
-
-function TopProducts() {
+function TopProducts({products = []}) {
     return(
         <div className='machines-content'>
             <table className='machine-table'>
@@ -19,11 +12,11 @@ function TopProducts() {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockProducts.map(p => (
-                        <tr key={p.rank} className='machine-row'>
-                            <td className='machine-row-address'>{p.rank}</td>
+                    {products.map((p,index) => (
+                        <tr key={index} className='machine-row'>
+                            <td className='machine-row-address'>{index + 1}</td>
                             <td className='machine-row-name'>{p.name}</td>
-                            <td className='machine-row-address'>{p.revenue}</td>
+                            <td className='machine-row-address'>€{p.revenue}</td>
                         </tr>
                     ))}
                 </tbody>
