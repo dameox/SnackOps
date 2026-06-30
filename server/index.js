@@ -11,6 +11,7 @@ const productsRoute = require('./routes/productsRoute.js');
 const restockPlanRoute = require('./routes/restockPlanRoute.js');
 const routeRoutes = require('./routes/routesRoute.js');
 const usersRoute = require('./routes/usersRoute.js');
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
@@ -22,12 +23,17 @@ app.use('/api/restock-plan', restockPlanRoute);
 app.use('/api/routes', routeRoutes);
 app.use('/api/users', usersRoute);
 
+
 // Routes
 app.get('/api/initialRoute', (req, res) => {
     res.json({ message: 'API is working!' });
 });
 
-
+const reactBuildPath = path.join(__dirname, '../client/dist');
+app.use(express.static(reactBuildPath));
+app.get((req, res) => {
+    res.sendFile(path.join(reactBuildPath, 'index.html'));
+});
 
 const PORT = process.env.PORT || 3000;
 
